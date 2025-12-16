@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Addresses - Farm2Home</title>
+    <link rel="stylesheet" href="{% static 'css/global-typography.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addresses.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>FARM2HOME</span>
+                <span class="account-badge">ACCOUNT</span>
+            </div>
+            <div class="header-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 class="profile-name" id="profileName"><i class="fas fa-spinner fa-spin"></i></h3>
+                    <p class="profile-email" id="profileEmail"><i class="fas fa-spinner fa-spin"></i></p>
+                </div>
+            </div>
+
+            <div class="orders-card">
+                <div class="orders-label">TOTAL ORDERS</div>
+                <div class="orders-count" id="sidebarTotalOrders"><i class="fas fa-spinner fa-spin"></i></div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{% url 'main:home' %}" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>HOME</span>
+                </a>
+                <a href="{% url 'main:catalog' %}" class="nav-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>PRODUCTS</span>
+                </a>
+                <a href="{% url 'main:account_home' %}" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>OVERVIEW</span>
+                </a>
+                <a href="{% url 'main:account_orders' %}" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>ORDERS</span>
+                </a>
+                <a href="{% url 'main:account_addresses' %}" class="nav-item active">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>ADDRESSES</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="{% url 'main:account_settings' %}" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>SETTINGS</span>
+                </a>
+            </nav>
+
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>LOGOUT</span>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Page Title -->
+            <div class="addresses-header">
+                <div class="addresses-title-section">
+                    <a href="{% url 'main:account_home' %}" class="back-btn-link">
+                        <i class="fas fa-chevron-left"></i>
+                        Back to Overview
+                    </a>
+                    <h1 class="page-title addresses-title">DELIVERY ADDRESSES</h1>
+                    <p class="addresses-subtitle">MANAGE YOUR SAVED DELIVERY LOCATIONS</p>
+                </div>
+                <button class="add-address-btn-header">
+                    <i class="fas fa-plus"></i>
+                    ADD NEW ADDRESS
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" style="text-align: center; padding: 4rem 2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #6b8e23;"></i>
+                <p style="margin-top: 1.5rem; color: #718096; font-size: 1.1rem;">Loading your addresses...</p>
+            </div>
+            
+            <!-- Empty State (hidden by default) -->
+            <div id="emptyState" style="display: none; text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);">
+                <i class="fas fa-map-marker-alt" style="font-size: 3rem; color: #E8F5E9; margin-bottom: 1rem;"></i>
+                <h3 style="font-size: 1.25rem; color: #2D3748; margin-bottom: 0.5rem; font-weight: 700;">NO ADDRESSES SAVED</h3>
+                <p style="color: #718096; margin-bottom: 0;">Add your first delivery address to get started</p>
+            </div>
+
+            <!-- Addresses Grid -->
+            <div class="addresses-grid" id="addressesContainer" style="display: none;">
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Address Modal -->
+    <div class="modal" id="addressModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">ADD DELIVERY ADDRESS</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addressForm">
+                    <div class="form-group">
+                        <label for="addressType">ADDRESS TYPE</label>
+                        <select id="addressType" name="addressType" required>
+                            <option value="">Home</option>
+                            <option value="home">Home</option>
+                            <option value="work">Work</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">PHONE NUMBER</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+92 300 1234567" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressLine">STREET ADDRESS</label>
+                        <input type="text" id="addressLine" name="addressLine" placeholder="House 123, Street 5, F-7 Markaz" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">CITY</label>
+                        <input type="text" id="city" name="city" placeholder="Karachi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode">POSTAL CODE</label>
+                        <input type="text" id="postalCode" name="postalCode" placeholder="74000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="isDefault">
+                            <input type="checkbox" id="isDefault" name="isDefault">
+                            SET AS DEFAULT ADDRESS
+                        </label>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelBtn">CANCEL</button>
+                        <button type="submit" class="btn-save">
+                            SAVE ADDRESS
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/account.js' %}"></script>
+    <script src="{% static 'js/addresses.js' %}"></script>
+</body>
+</html>

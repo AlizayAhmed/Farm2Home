@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods - Farm2Home</title>
+    <link rel="stylesheet" href="{% static 'css/global-typography.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>FARM2HOME</span>
+                <span class="account-badge">ACCOUNT</span>
+            </div>
+            <div class="header-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">Loading...</h3>
+                    <p id="userEmail">Loading...</p>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stat-label">TOTAL ORDERS</div>
+                <div class="stat-value" id="totalOrders">0 Orders</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{% url 'main:account_home' %}" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>OVERVIEW</span>
+                </a>
+                <a href="{% url 'main:account_orders' %}" class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>ORDERS</span>
+                </a>
+                <a href="{% url 'main:account_addresses' %}" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>ADDRESSES</span>
+                </a>
+                <a href="{% url 'main:account_payment' %}" class="nav-item active">
+                    <i class="fas fa-credit-card"></i>
+                    <span>PAYMENT</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="{% url 'main:account_settings' %}" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>SETTINGS</span>
+                </a>
+            </nav>
+
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>LOGOUT</span>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Page Title -->
+            <div class="payment-header">
+                <div class="payment-title-section">
+                    <a href="{% url 'main:account_home' %}" class="back-btn-link">
+                        <i class="fas fa-chevron-left"></i>
+                        Back to Overview
+                    </a>
+                    <h1 class="page-title payment-title">PAYMENT METHODS</h1>
+                    <p class="payment-subtitle">MANAGE YOUR PAYMENT OPTIONS SECURELY</p>
+                </div>
+                <button class="add-payment-btn-header">
+                    <i class="fas fa-plus"></i>
+                    ADD PAYMENT METHOD
+                </button>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="security-notice">
+                <div class="security-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="security-text">
+                    <h3>YOUR PAYMENTS ARE SECURE</h3>
+                    <p>All transactions are encrypted and your payment information is never stored on our servers.</p>
+                </div>
+            </div>
+
+            <!-- Payment Methods Grid -->
+            <!-- Payment cards will be dynamically loaded from database via account-payment.js -->
+            <div class="payment-grid">
+                <!-- Loading indicator -->
+                <div class="payment-card" style="justify-content: center; align-items: center; min-height: 200px;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #6b8e23; margin-bottom: 1rem;"></i>
+                        <p style="color: #666;">Loading payment methods...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteConfirmModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header" style="border-bottom: 1px solid #e5e5e5;">
+                <h2 style="color: #d32f2f; font-size: 1.25rem;">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                    DELETE PAYMENT METHOD
+                </h2>
+                <button class="modal-close" id="closeDeleteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <p style="color: #333; font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                    Are you sure you want to delete this payment method? This action cannot be undone.
+                </p>
+                <div class="modal-actions" style="gap: 1rem;">
+                    <button type="button" class="btn-cancel" id="cancelDeleteBtn" style="flex: 1;">
+                        CANCEL
+                    </button>
+                    <button type="button" class="btn-save" id="confirmDeleteBtn" style="flex: 1; background-color: #d32f2f;">
+                        <i class="fas fa-trash" style="margin-right: 0.5rem;"></i>
+                        DELETE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">ADD PAYMENT METHOD</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="paymentType">PAYMENT TYPE</label>
+                        <select id="paymentType" name="paymentType" required>
+                            <option value="">Debit/Credit Card</option>
+                            <option value="debit">Debit Card</option>
+                            <option value="credit">Credit Card</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardHolder">CARD HOLDER NAME</label>
+                        <input type="text" id="cardHolder" name="cardHolder" placeholder="Ahmed Khan">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardNumber">CARD NUMBER</label>
+                        <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group form-group-half">
+                            <label for="expiryDate">EXPIRY DATE</label>
+                            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group form-group-half">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bankName">BANK NAME</label>
+                        <select id="bankName" name="bankName">
+                            <option value="">Select Bank</option>
+                            <option value="hbl">HBL</option>
+                            <option value="mcb">MCB</option>
+                            <option value="ubl">UBL</option>
+                            <option value="allied">Allied Bank</option>
+                            <option value="meezan">Meezan Bank</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelBtn">CANCEL</button>
+                        <button type="submit" class="btn-save">
+                            ADD PAYMENT METHOD
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/account.js' %}"></script>
+    <script src="{% static 'js/account-payment.js' %}"></script>
+</body>
+</html>
+
+

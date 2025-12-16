@@ -1,0 +1,1295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm2Home - Fresh Farm to Your Door</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal-auth.css' %}">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Farm2Home Logo" class="logo-image">
+                <span>Farm2Home</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="{% url 'main:catalog' %}">Products</a></li>
+                <li><a href="#footer">Contact</a></li>
+                <li><button type="button" class="auth-btn login-btn" onclick="event.preventDefault(); openLoginModal();">Login</button></li>
+                <li><button type="button" class="auth-btn signup-btn" onclick="event.preventDefault(); openSignupModal();">Sign Up</button></li>
+                <li><a href="{% url 'main:catalog' %}" class="shop-btn">Shop Now</a></li>
+                <li><a href="{% url 'main:account_home' %}" class="profile-icon"><i class="fas fa-user-circle"></i></a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Background Image -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="{% static 'images/main.png' %}" alt="Farm Background" class="hero-bg-image">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                FRESH
+                <span class="highlight">FROM FARM</span>
+            </h1>
+            <p class="hero-subtitle">Directly to your table, no middleman. Just pure, organic goodness.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'main:catalog' %}" class="btn btn-primary">
+                    Explore Products
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <button class="btn btn-secondary">
+                    Learn More
+                </button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Farm2Home Section -->
+    <section class="about-farm-section" id="about">
+        <div class="container">
+            <div class="about-header">
+                <h2>About Farm2Home</h2>
+                <p>Connecting local farms directly to your table.</p>
+            </div>
+
+            <div class="about-cards-grid">
+                <!-- Card 1 -->
+                <div class="about-card">
+                    <div class="about-card-image">
+                        <img src="{% static 'images/card1.jpg' %}" alt="Our Mission">
+                    </div>
+                    <div class="about-card-content">
+                        <h3>Our Mission</h3>
+                        <p>To provide fresh locally-sourced produce while supporting sustainable farming practices</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="about-card">
+                    <div class="about-card-image">
+                        <img src="{% static 'images/card2.jpg' %}" alt="Our Farms">
+                    </div>
+                    <div class="about-card-content">
+                        <h3>Our Farms</h3>
+                        <p>Partnering in trusted local farms commited of quality and freshness.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="about-card">
+                    <div class="about-card-image">
+                        <img src="{% static 'images/card3.png' %}" alt="Our Impact">
+                    </div>
+                    <div class="about-card-content">
+                        <h3>Our Impact</h3>
+                        <p>Reducing food miles and connecting of communities through healthy exiting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-categories-section">
+        <div class="featured-content-wrapper">
+            <h2 class="featured-heading">Our Products</h2>
+            <div class="featured-image-container">
+                <lottie-player
+                    src="{% static 'Re fork farmer.json' %}"
+                    background="transparent"
+                    speed="1"
+                    class="featured-products-image"
+                    loop
+                    autoplay>
+                </lottie-player>
+                
+                <!-- Content overlays inside the white cards -->
+                <div class="product-content-overlay vegetables-content">
+                    <h3>Purely Fresh Vegetables</h3>
+                    <p>Premium quality vegetables at special price</p>
+                    <div class="product-image-overlay">
+                        <img src="{% static 'images/vegetables/carrot.png' %}" alt="Vegetables">
+                    </div>
+                    <a href="{% url 'main:catalog' %}?category=vegetables" class="shop-now-btn">
+                        Shop Now →
+                    </a>
+                </div>
+                
+                <div class="product-content-overlay fruits-content">
+                    <h3>Fresh Fruits, Pure Quality</h3>
+                    <p>Handpicked fresh fruits directly from farms</p>
+                    <div class="product-image-overlay">
+                        <img src="{% static 'images/fruits/pineapple.png' %}" alt="Fruits">
+                    </div>
+                    <a href="{% url 'main:catalog' %}?category=fruits" class="shop-now-btn">
+                        Shop Now →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B2B Section -->
+    <section class="b2b-section" id="b2bSection">
+        <div class="b2b-content">
+            <h2>B2B Service</h2>
+            <h3>Wholesale Pricing Info</h3>
+            
+            <div class="b2b-features">
+                <div class="b2b-feature">
+                    <span class="feature-check">✅</span>
+                    <span>Wholesale Pricing</span>
+                </div>
+                <div class="b2b-feature">
+                    <span class="feature-check">✅</span>
+                    <span>Daily Fresh Delivery</span>
+                </div>
+                <div class="b2b-feature">
+                    <span class="feature-check">✅</span>
+                    <span>Flexible Payment Terms</span>
+                </div>
+                <div class="b2b-feature">
+                    <span class="feature-check">✅</span>
+                    <span>Dedicated Account Manager</span>
+                </div>
+            </div>
+
+            <div class="b2b-actions">
+                <button type="button" class="b2b-btn primary-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    <span>📋</span>
+                    Request Quote
+                </button>
+                <button type="button" onclick="openCallbackModal()" class="b2b-btn secondary-btn">
+                    <span>📞</span>
+                    Call Us
+                </button>
+            </div>
+
+            <div class="b2b-stats">
+                <div class="stat-item">
+                    <strong>500+</strong>
+                    <span>B2B Clients</span>
+                </div>
+                <div class="stat-item">
+                    <strong>50kg+</strong>
+                    <span>Minimum Order</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Backdrop -->
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+
+    <!-- Fresh Login & Signup Modal -->
+    <div id="authModal" class="auth-modal-new">
+        <div class="modal-container">
+            <!-- Left Side - Illustration -->
+            <div class="modal-left-side">
+                <img src="{% static 'images/left.png' %}" alt="Farm Illustration" class="modal-illustration">
+            </div>
+
+            <!-- Right Side - Form -->
+            <div class="modal-right-side">
+                <button type="button" class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+                
+                <!-- Login Form -->
+                <div id="loginForm" class="auth-form-section">
+                    <div class="form-header">
+                        <h1 class="form-title">Login</h1>
+                        <p class="form-subtitle">Welcome back to Farm2Home</p>
+                    </div>
+
+                    <form id="loginFormElement" method="POST" action="{% url 'main:login' %}" class="form-container">
+                        {% csrf_token %}
+                        
+                        <!-- Django Messages -->
+                        {% if messages %}
+                            <div class="messages-box">
+                                {% for message in messages %}
+                                    <div class="message message-{{ message.tags }}">
+                                        <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% elif message.tags == 'success' %}check-circle{% else %}info-circle{% endif %}"></i>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="login_email">Email Address</label>
+                            <div class="input-field">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="login_email" name="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login_password">Password</label>
+                            <div class="input-field password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="login_password" name="password" placeholder="Enter your password" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('login_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="checkbox-field">
+                                <input type="checkbox" name="rememberMe">
+                                <span>Remember me</span>
+                            </label>
+                            <button type="button" class="forgot-password-link" onclick="switchToForgotPassword()">Forgot password?</button>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Don't have an account? <button type="button" class="switch-form-btn" onclick="switchToSignup()">Sign up</button></p>
+                    </div>
+                </div>
+
+                <!-- Signup Form (Hidden by default) -->
+                <div id="signupForm" class="auth-form-section" style="display: none;">
+                    <div class="form-header">
+                        <h1 class="form-title">Sign Up</h1>
+                        <p class="form-subtitle">Create your Farm2Home account</p>
+                    </div>
+
+                    <form id="signupFormElement" method="POST" action="{% url 'main:signup' %}" class="form-container">
+                        {% csrf_token %}
+                        
+                        <!-- Django Messages -->
+                        {% if messages %}
+                            <div class="messages-box">
+                                {% for message in messages %}
+                                    <div class="message message-{{ message.tags }}">
+                                        <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% elif message.tags == 'success' %}check-circle{% else %}info-circle{% endif %}"></i>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="signup_fullname">Full Name</label>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signup_fullname" name="fullName" placeholder="John Doe" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup_email">Email Address</label>
+                            <div class="input-field">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="signup_email" name="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup_phone">Phone Number</label>
+                            <div class="input-field">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="signup_phone" name="phone" placeholder="+92 300 1234567" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup_address">Address</label>
+                            <div class="input-field">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="signup_address" name="address" placeholder="123 Street, City" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup_password">Password</label>
+                            <div class="input-field password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signup_password" name="password" placeholder="Create a strong password" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('signup_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup_confirm_password">Confirm Password</label>
+                            <div class="input-field password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signup_confirm_password" name="confirmPassword" placeholder="Confirm your password" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('signup_confirm_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <label class="checkbox-field">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <span>I agree to the Terms & Conditions</span>
+                        </label>
+
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Already have an account? <button type="button" class="switch-form-btn" onclick="switchToLogin()">Login</button></p>
+                    </div>
+                </div>
+
+                <!-- Forgot Password Form (Hidden by default) -->
+                <div id="forgotPasswordForm" class="auth-form-section" style="display: none;">
+                    <div class="form-header">
+                        <h1 class="form-title">Forgot Password?</h1>
+                        <p class="form-subtitle">Enter your email to receive a password reset link</p>
+                    </div>
+
+                    <form id="forgotPasswordFormElement" class="form-container">
+                        {% csrf_token %}
+                        
+                        <div id="forgotPasswordAlert"></div>
+
+                        <div class="form-group">
+                            <label for="forgot_email">Email Address</label>
+                            <div class="input-field">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="forgot_email" name="email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="forgotPasswordSubmitBtn">
+                            <span id="forgotPasswordBtnText">Send Reset Link</span>
+                            <span id="forgotPasswordBtnSpinner" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Sending...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Remember your password? <button type="button" class="switch-form-btn" onclick="switchToLogin()">Login</button></p>
+                    </div>
+                </div>
+
+                <!-- Reset Password Form (Hidden by default) -->
+                <div id="resetPasswordForm" class="auth-form-section" style="display: none;">
+                    <div class="form-header">
+                        <button type="button" class="back-btn" onclick="switchToLogin()">
+                            <i class="fas fa-arrow-left"></i> Back to Login
+                        </button>
+                        <h1 class="form-title">Reset Your Password</h1>
+                        <p class="form-subtitle">Enter your new password below</p>
+                    </div>
+
+                    <form id="resetPasswordFormElement" class="form-container">
+                        {% csrf_token %}
+                        <input type="hidden" id="resetToken" name="token">
+                        
+                        <div id="resetPasswordAlert"></div>
+
+                        <div class="form-group">
+                            <label for="reset_new_password">New Password</label>
+                            <div class="input-field password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="reset_new_password" name="newPassword" placeholder="Enter new password" required minlength="6">
+                                <button type="button" class="toggle-password" onclick="togglePassword('reset_new_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small style="color: #666; font-size: 0.85rem; padding-left: 2.5rem; display: block; margin-top: 0.25rem;">
+                                Password must be at least 6 characters long
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reset_confirm_password">Confirm Password</label>
+                            <div class="input-field password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="reset_confirm_password" name="confirmPassword" placeholder="Confirm new password" required minlength="6">
+                                <button type="button" class="toggle-password" onclick="togglePassword('reset_confirm_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="resetPasswordSubmitBtn">
+                            <span id="resetPasswordBtnText">Reset Password</span>
+                            <span id="resetPasswordBtnSpinner" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Resetting...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Remember your password? <button type="button" class="switch-form-btn" onclick="switchToLogin()">Login</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Callback Request Modal -->
+    <div id="callbackModal" class="callback-modal">
+        <div class="callback-modal-content">
+            <button type="button" class="callback-close-btn" onclick="closeCallbackModal()">&times;</button>
+            <h2>Request a Callback</h2>
+            <p style="color: #666; margin-bottom: 20px;">Share your details and our team will call you shortly.</p>
+            
+            <form id="callbackForm" onsubmit="submitCallbackForm(event)">
+                <div class="form-group">
+                    <label>Name <span style="color: red;">*</span></label>
+                    <input type="text" id="callback_name" placeholder="Your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number <span style="color: red;">*</span></label>
+                    <input type="tel" id="callback_phone" placeholder="+91 1234567890" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Preferred Time</label>
+                    <select id="callback_time">
+                        <option value="">Select preferred time</option>
+                        <option value="morning">Morning (9 AM - 12 PM)</option>
+                        <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                        <option value="evening">Evening (4 PM - 8 PM)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message (Optional)</label>
+                    <textarea id="callback_message" rows="3" placeholder="Any specific questions or requirements..."></textarea>
+                </div>
+                
+                <div class="callback-actions">
+                    <button type="submit" class="callback-submit-btn">Request Callback</button>
+                    <button type="button" class="callback-cancel-btn" onclick="closeCallbackModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Why Farm2Home -->
+    <section class="why-farm2home-section" id="whyFarm2HomeSection">
+        <!-- Coin Falling Animation -->
+        <lottie-player
+            id="coinAnimation"
+            src="{% static 'Coin Falling Animation.json' %}"
+            background="transparent"
+            speed="1"
+            class="coin-animation-container"
+            loop
+            autoplay>
+        </lottie-player>
+        
+        <!-- Why Farm2Home Content Overlay -->
+        <div class="why-farm2home-content-overlay">
+            <div class="why-left-content">
+                <h2 class="why-title">Why Choose Farm2Home?</h2>
+                <p class="why-subtitle">Direct from farm to your table with guaranteed freshness</p>
+            </div>
+            
+            <div class="why-features">
+                <div class="why-feature">
+                    <div class="feature-icon-circle">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>100% Organic</h4>
+                    <p>Certified organic produce grown without harmful pesticides or chemicals</p>
+                </div>
+                
+                <div class="why-feature">
+                    <div class="feature-icon-circle">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h4>Fast Delivery</h4>
+                    <p>Farm-fresh products delivered to your doorstep within 24 hours</p>
+                </div>
+                
+                <div class="why-feature">
+                    <div class="feature-icon-circle">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Fair Trade</h4>
+                    <p>Supporting local farmers with fair prices and sustainable practices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="{% static 'images/logo.png' %}" alt="Farm2Home Logo" style="max-width: 120px; height: auto; margin-bottom: 10px;">
+                        <span>FARM2HOME</span>
+                    </div>
+                    <p>Bringing fresh, organic produce directly from farm to your table.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="{% url 'main:catalog' %}">Products</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                        <li><a href="javascript:void(0)" onclick="navigateToAccount()">My Account</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Get In Touch</h4>
+                    <form class="footer-contact-form">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="3" required></textarea>
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> hello@farm2home.com</li>
+                        <li><i class="fas fa-phone"></i> +92 (300) 567-890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Karachi, Pakistan</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Farm2Home. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script>
+        // ================================
+        // CALLBACK MODAL FUNCTIONS (DEFINED FIRST)
+        // ================================
+        function openCallbackModal() {
+            console.log('Opening callback modal...');
+            console.log('Button clicked - function called!');
+            const modal = document.getElementById('callbackModal');
+            console.log('Modal element:', modal);
+            if (!modal) {
+                console.error('Callback modal not found!');
+                if (typeof notifications !== 'undefined') {
+                    notifications.error('Error: Modal element not found! Check if callbackModal exists in HTML.');
+                } else {
+                    alert('Error: Modal element not found! Check if callbackModal exists in HTML.');
+                }
+                return;
+            }
+            console.log('Adding active class to modal...');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            console.log('Callback modal opened successfully. Classes:', modal.className);
+        }
+
+        function closeCallbackModal() {
+            console.log('Closing callback modal...');
+            const modal = document.getElementById('callbackModal');
+            if (!modal) {
+                console.error('Callback modal not found!');
+                return;
+            }
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            const form = document.getElementById('callbackForm');
+            if (form) {
+                form.reset();
+            }
+            console.log('Callback modal closed successfully');
+        }
+
+        function submitCallbackForm(event) {
+            event.preventDefault();
+            console.log('Submitting callback form...');
+            
+            const name = document.getElementById('callback_name').value;
+            const phone = document.getElementById('callback_phone').value;
+            const time = document.getElementById('callback_time').value;
+            const message = document.getElementById('callback_message').value;
+            
+            // Show success notification
+            if (typeof notifications !== 'undefined') {
+                notifications.success('✅ Callback request submitted! Our team will contact you soon.');
+            } else {
+                alert('Callback request submitted! Our team will contact you soon.');
+            }
+            
+            // Log data (you can replace this with actual API call)
+            console.log('Callback Request:', { name, phone, time, message });
+            
+            // Close modal
+            closeCallbackModal();
+        }
+
+        /**
+         * Navigate to account page with login check
+         * Shows login modal if user is not authenticated
+         */
+        function navigateToAccount() {
+            const customerId = localStorage.getItem('customer_id');
+            
+            if (!customerId) {
+                // User not logged in - show login modal
+                if (typeof notifications !== 'undefined') {
+                    notifications.warning('⚠️ Please login first to access your account');
+                }
+                openLoginModal();
+            } else {
+                // User is logged in - redirect to account page
+                window.location.href = "{% url 'main:account_home' %}";
+            }
+        }
+
+        // Apply about section background image
+        const aboutSection = document.querySelector('.about-farm-section');
+        aboutSection.style.backgroundImage = "url('{% static 'images/about.png' %}')";
+        // backgroundSize handled by CSS to avoid extra white space
+
+        // Apply why farm2home section background image
+        const whySection = document.getElementById('whyFarm2HomeSection');
+        whySection.style.backgroundImage = "url('{% static 'images/whyfarm2home.png' %}')";
+
+        // ================================
+        // NAVBAR HIDE ON SCROLL (HERO ONLY)
+        // ================================
+        const navbar = document.querySelector('.navbar');
+        const heroSection = document.querySelector('.hero');
+        
+        window.addEventListener('scroll', () => {
+            if (!navbar || !heroSection) return;
+            
+            const heroBottom = heroSection.offsetHeight;
+            const scrolled = window.scrollY;
+            
+            if (scrolled > heroBottom - 100) {
+                // Scrolled past hero - hide navbar
+                navbar.style.opacity = '0';
+                navbar.style.visibility = 'hidden';
+                navbar.style.pointerEvents = 'none';
+                navbar.style.transition = 'all 0.3s ease';
+            } else {
+                // Still in hero - show navbar
+                navbar.style.opacity = '1';
+                navbar.style.visibility = 'visible';
+                navbar.style.pointerEvents = 'auto';
+                navbar.style.transition = 'all 0.3s ease';
+            }
+        });
+
+        // ================================
+        // FRESH AUTH MODAL FUNCTIONS
+        // ================================
+
+        function openLoginModal() {
+            const modal = document.getElementById('authModal');
+            const backdrop = document.getElementById('modalBackdrop');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            // Show login form, hide signup form
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            
+            // Show modal
+            modal.classList.add('active');
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openSignupModal() {
+            const modal = document.getElementById('authModal');
+            const backdrop = document.getElementById('modalBackdrop');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            // Show signup form, hide login form
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            
+            // Show modal
+            modal.classList.add('active');
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAuthModal(event) {
+            // If event exists and it's not the backdrop, don't close
+            if (event && event.target !== document.getElementById('modalBackdrop')) {
+                return;
+            }
+            
+            const modal = document.getElementById('authModal');
+            const backdrop = document.getElementById('modalBackdrop');
+            
+            modal.classList.remove('active');
+            backdrop.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function switchToLogin() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            if (resetPasswordForm) resetPasswordForm.style.display = 'none';
+        }
+
+        function switchToSignup() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            if (resetPasswordForm) resetPasswordForm.style.display = 'none';
+        }
+
+        function switchToForgotPassword() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'none';
+            if (forgotPasswordForm) forgotPasswordForm.style.display = 'block';
+            if (resetPasswordForm) resetPasswordForm.style.display = 'none';
+        }
+
+        function switchToResetPassword() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'none';
+            if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            if (resetPasswordForm) resetPasswordForm.style.display = 'block';
+        }
+
+        function togglePassword(fieldId) {
+            const input = document.getElementById(fieldId);
+            const button = event.currentTarget;
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Close modal on backdrop click
+        document.getElementById('modalBackdrop').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAuthModal(e);
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('authModal');
+                if (modal.classList.contains('active')) {
+                    closeAuthModal();
+                }
+            }
+        });
+
+        // Form validation and submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in and update UI accordingly
+            updateAuthButtonsVisibility();
+            
+            const loginFormElement = document.getElementById('loginFormElement');
+            const signupFormElement = document.getElementById('signupFormElement');
+
+            // Login form validation and submission
+            if (loginFormElement) {
+                loginFormElement.addEventListener('submit', async function(e) {
+                    e.preventDefault(); // Always prevent default to handle via API
+                    
+                    const email = document.getElementById('login_email').value.trim();
+                    const password = document.getElementById('login_password').value.trim();
+                    
+                    if (!email || !password) {
+                        if (typeof notifications !== 'undefined') {
+                            notifications.error('❌ Please fill in all fields');
+                        } else {
+                            alert('Please fill in all fields');
+                        }
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/auth/login/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCsrfToken()
+                            },
+                            body: JSON.stringify({ email, password })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success === true) {
+                            // Store customer data in localStorage
+                            localStorage.setItem('customer_id', data.customer_id);
+                            localStorage.setItem('customer_name', data.name);
+                            localStorage.setItem('customer_email', data.email);
+                            
+                            // Show success message using notifications
+                            if (typeof notifications !== 'undefined') {
+                                notifications.success('Login successful! Welcome back, ' + data.name);
+                            } else {
+                                alert('✅ Login successful! Welcome back, ' + data.name);
+                            }
+                            
+                            // Close the modal
+                            closeAuthModal();
+                            
+                            // Hide login and signup buttons
+                            updateAuthButtonsVisibility();
+                            return; // Success - stop execution
+                        } else {
+                            // Show error message
+                            const errorMsg = data.error || data.message || 'Login failed. Please check your credentials.';
+                            if (typeof notifications !== 'undefined') {
+                                notifications.error(errorMsg);
+                            } else {
+                                alert('❌ ' + errorMsg);
+                            }
+                            return; // Error - stop execution
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        if (typeof notifications !== 'undefined') {
+                            notifications.error('An error occurred during login. Please try again.');
+                        } else {
+                            alert('❌ An error occurred during login. Please try again.');
+                        }
+                        return; // Exception - stop execution
+                    }
+                });
+            }
+
+            // Helper function to get CSRF token
+            function getCsrfToken() {
+                const name = 'csrftoken';
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        return cookie.substring(name.length + 1);
+                    }
+                }
+                return '';
+            }
+            
+            // Function to update auth buttons visibility based on login status
+            function updateAuthButtonsVisibility() {
+                const customerId = localStorage.getItem('customer_id');
+                const loginBtn = document.querySelector('.login-btn');
+                const signupBtn = document.querySelector('.signup-btn');
+                
+                if (customerId) {
+                    // User is logged in - hide login and signup buttons
+                    if (loginBtn) loginBtn.style.display = 'none';
+                    if (signupBtn) signupBtn.style.display = 'none';
+                } else {
+                    // User is not logged in - show login and signup buttons
+                    if (loginBtn) loginBtn.style.display = '';
+                    if (signupBtn) signupBtn.style.display = '';
+                }
+            }
+
+            // Signup form validation and submission
+            if (signupFormElement) {
+                signupFormElement.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const fullname = document.getElementById('signup_fullname').value.trim();
+                    const email = document.getElementById('signup_email').value.trim();
+                    const phone = document.getElementById('signup_phone').value.trim();
+                    const address = document.getElementById('signup_address').value.trim();
+                    const password = document.getElementById('signup_password').value.trim();
+                    const confirmPassword = document.getElementById('signup_confirm_password').value.trim();
+                    const agreeTerms = document.getElementById('agreeTerms').checked;
+                    
+                    // Validate all fields are filled
+                    if (!fullname || !email || !phone || !address || !password || !confirmPassword) {
+                        alert('❌ Please fill in all fields');
+                        return;
+                    }
+                    
+                    // Validate email format
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        alert('❌ Please enter a valid email address');
+                        return;
+                    }
+                    
+                    // Validate password length
+                    if (password.length < 6) {
+                        alert('❌ Password must be at least 6 characters long');
+                        return;
+                    }
+                    
+                    // Validate passwords match
+                    if (password !== confirmPassword) {
+                        alert('❌ Passwords do not match');
+                        return;
+                    }
+                    
+                    // Validate terms checkbox
+                    if (!agreeTerms) {
+                        alert('❌ Please agree to Terms & Conditions');
+                        return;
+                    }
+                    
+                    try {
+                        const response = await fetch('/api/auth/signup/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCsrfToken()
+                            },
+                            body: JSON.stringify({
+                                name: fullname,
+                                email: email,
+                                phone: phone,
+                                address: address,
+                                password: password
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (response.ok && data.success === true) {
+                            // Store customer data in localStorage
+                            localStorage.setItem('customer_id', data.customer_id);
+                            localStorage.setItem('customer_name', data.name);
+                            localStorage.setItem('customer_email', data.email);
+                            
+                            // Show success message using notifications
+                            if (typeof notifications !== 'undefined') {
+                                notifications.success('Signup successfull Welcome, ' + data.name + '!');
+                            } else {
+                                alert('✅ Signup successful! Welcome, ' + data.name + '!');
+                            }
+                            
+                            // Close the modal
+                            closeAuthModal();
+                            
+                            // Hide login and signup buttons
+                            updateAuthButtonsVisibility();
+                            
+                            // Reset form
+                            signupFormElement.reset();
+                            return; // Success - stop execution
+                        } else {
+                            // Show specific error message
+                            const errorMsg = data.error || data.message || 'Signup failed. Please try again.';
+                            
+                            // Use notifications library if available
+                            if (typeof notifications !== 'undefined') {
+                                notifications.error(errorMsg);
+                            } else {
+                                // Fallback to alert with emoji
+                                if (errorMsg.includes('Email already exists') || errorMsg.includes('Phone number already registered')) {
+                                    alert('⚠️ ' + errorMsg);
+                                } else {
+                                    alert('❌ ' + errorMsg);
+                                }
+                            }
+                            return; // Error - stop execution
+                        }
+                    } catch (error) {
+                        console.error('Signup error:', error);
+                        if (typeof notifications !== 'undefined') {
+                            notifications.error('An error occurred during signup. Please try again.');
+                        } else {
+                            alert('❌ An error occurred during signup. Please try again.');
+                        }
+                        return; // Exception - stop execution
+                    }
+                });
+            }
+
+            // Forgot Password form submission
+            const forgotPasswordFormElement = document.getElementById('forgotPasswordFormElement');
+            if (forgotPasswordFormElement) {
+                forgotPasswordFormElement.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('forgot_email').value.trim();
+                    const submitBtn = document.getElementById('forgotPasswordSubmitBtn');
+                    const btnText = document.getElementById('forgotPasswordBtnText');
+                    const btnSpinner = document.getElementById('forgotPasswordBtnSpinner');
+                    const alertContainer = document.getElementById('forgotPasswordAlert');
+                    
+                    // Validate email
+                    if (!email) {
+                        showForgotPasswordAlert('Please enter your email address', 'error');
+                        return;
+                    }
+                    
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        showForgotPasswordAlert('Please enter a valid email address', 'error');
+                        return;
+                    }
+                    
+                    // Disable submit button and show loading state
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnSpinner.style.display = 'inline';
+                    
+                    try {
+                        const response = await fetch('/api/auth/request-password-reset/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCsrfToken()
+                            },
+                            body: JSON.stringify({ email: email })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showForgotPasswordAlert(data.message, 'success');
+                            // Clear form
+                            forgotPasswordFormElement.reset();
+                        } else {
+                            showForgotPasswordAlert(data.error || 'Failed to send reset link. Please try again.', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showForgotPasswordAlert('An error occurred. Please try again later.', 'error');
+                    } finally {
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        btnText.style.display = 'inline';
+                        btnSpinner.style.display = 'none';
+                    }
+                });
+            }
+            
+            function showForgotPasswordAlert(message, type) {
+                const alertContainer = document.getElementById('forgotPasswordAlert');
+                const alertClass = type === 'success' ? 'message-success' : 'message-error';
+                const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+                
+                alertContainer.innerHTML = `
+                    <div class="message ${alertClass}">
+                        <i class="fas ${icon}"></i>
+                        ${message}
+                    </div>
+                `;
+                
+                // Auto-remove alert after 5 seconds
+                setTimeout(() => {
+                    alertContainer.innerHTML = '';
+                }, 5000);
+            }
+
+            function showResetPasswordAlert(message, type) {
+                const alertContainer = document.getElementById('resetPasswordAlert');
+                const alertClass = type === 'success' ? 'message-success' : 'message-error';
+                const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+                
+                alertContainer.innerHTML = `
+                    <div class="message ${alertClass}">
+                        <i class="fas ${icon}"></i>
+                        ${message}
+                    </div>
+                `;
+                
+                // Auto-remove alert after 5 seconds if error
+                if (type === 'error') {
+                    setTimeout(() => {
+                        alertContainer.innerHTML = '';
+                    }, 5000);
+                }
+            }
+
+            // Reset Password form submission
+            const resetPasswordFormElement = document.getElementById('resetPasswordFormElement');
+            if (resetPasswordFormElement) {
+                resetPasswordFormElement.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const newPassword = document.getElementById('reset_new_password').value;
+                    const confirmPassword = document.getElementById('reset_confirm_password').value;
+                    const token = document.getElementById('resetToken').value;
+                    const submitBtn = document.getElementById('resetPasswordSubmitBtn');
+                    const btnText = document.getElementById('resetPasswordBtnText');
+                    const btnSpinner = document.getElementById('resetPasswordBtnSpinner');
+                    
+                    // Validate passwords
+                    if (newPassword.length < 6) {
+                        showResetPasswordAlert('Password must be at least 6 characters long', 'error');
+                        return;
+                    }
+                    
+                    if (newPassword !== confirmPassword) {
+                        showResetPasswordAlert('Passwords do not match', 'error');
+                        return;
+                    }
+                    
+                    // Disable submit button
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnSpinner.style.display = 'inline';
+                    
+                    try {
+                        const response = await fetch('/api/auth/reset-password/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCsrfToken()
+                            },
+                            body: JSON.stringify({
+                                token: token,
+                                new_password: newPassword,
+                                confirm_password: confirmPassword
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showResetPasswordAlert(data.message, 'success');
+                            resetPasswordFormElement.reset();
+                            // Switch to login after 2 seconds
+                            setTimeout(() => {
+                                switchToLogin();
+                            }, 2000);
+                        } else {
+                            showResetPasswordAlert(data.error || 'Failed to reset password. Please try again.', 'error');
+                            submitBtn.disabled = false;
+                            btnText.style.display = 'inline';
+                            btnSpinner.style.display = 'none';
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showResetPasswordAlert('An error occurred. Please try again later.', 'error');
+                        submitBtn.disabled = false;
+                        btnText.style.display = 'inline';
+                        btnSpinner.style.display = 'none';
+                    }
+                });
+            }
+
+            // Check for reset token in URL and open modal automatically
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetToken = urlParams.get('token');
+            if (resetToken) {
+                // Set token in hidden field
+                document.getElementById('resetToken').value = resetToken;
+                // Open modal with reset password form
+                const modal = document.getElementById('authModal');
+                const backdrop = document.getElementById('modalBackdrop');
+                modal.classList.add('active');
+                backdrop.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                // Switch to reset password form
+                switchToResetPassword();
+                // Remove token from URL to keep it clean
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
+            // Auto-open modal if there are messages from server
+            const messagesBox = document.querySelector('.messages-box');
+            if (messagesBox && messagesBox.textContent.trim()) {
+                // Check which form should be shown
+                if (document.getElementById('loginForm').style.display !== 'none' || 
+                    document.getElementById('loginForm').style.display === '') {
+                    setTimeout(() => openLoginModal(), 100);
+                }
+            }
+
+            // Handle scrolling to hash on page load (e.g., #footerSection)
+            if (window.location.hash) {
+                // Wait for page to fully load
+                setTimeout(() => {
+                    const hash = window.location.hash;
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        });
+
+        // ================================
+        // COIN FALLING ANIMATION ON SCROLL
+        // ================================
+        // Animation is now handled by Lottie player with autoplay
+        // No additional JavaScript needed
+
+        // Close modal when clicking on backdrop
+        document.addEventListener('DOMContentLoaded', function() {
+            const callbackModal = document.getElementById('callbackModal');
+            if (callbackModal) {
+                callbackModal.addEventListener('click', function(event) {
+                    if (event.target === callbackModal) {
+                        closeCallbackModal();
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
+

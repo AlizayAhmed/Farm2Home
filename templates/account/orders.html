@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Farm2Home</title>
+    <link rel="stylesheet" href="{% static 'css/global-typography.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>FARM2HOME</span>
+                <span class="account-badge">ACCOUNT</span>
+            </div>
+            <div class="header-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 class="profile-name" id="profileName"><i class="fas fa-spinner fa-spin"></i></h3>
+                    <p class="profile-email" id="profileEmail"><i class="fas fa-spinner fa-spin"></i></p>
+                </div>
+            </div>
+
+            <!-- Total Orders Card -->
+            <div class="orders-card">
+                <div class="orders-label">TOTAL ORDERS</div>
+                <div class="orders-count" id="sidebarTotalOrders"><i class="fas fa-spinner fa-spin"></i></div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="sidebar-nav">
+                <a href="{% url 'main:home' %}" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>HOME</span>
+                </a>
+                <a href="{% url 'main:catalog' %}" class="nav-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>PRODUCTS</span>
+                </a>
+                <a href="{% url 'main:account_home' %}" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>OVERVIEW</span>
+                </a>
+                <a href="{% url 'main:account_orders' %}" class="nav-item active">
+                    <i class="fas fa-box"></i>
+                    <span>ORDERS</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="{% url 'main:account_addresses' %}" class="nav-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>ADDRESSES</span>
+                </a>
+                <a href="{% url 'main:account_settings' %}" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>SETTINGS</span>
+                </a>
+            </nav>
+
+            <!-- Logout Button -->
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>LOGOUT</span>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Orders Header -->
+            <div class="orders-header">
+                <div class="orders-title-section">
+                    <a href="{% url 'main:account_home' %}" class="back-btn-link">
+                        <i class="fas fa-chevron-left"></i>
+                        Back to Overview
+                    </a>
+                    <h1 class="orders-title">ORDER HISTORY</h1>
+                    <p class="orders-subtitle">TRACK AND MANAGE ALL YOUR ORDERS</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search orders...">
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="tab-btn active" data-filter="all">
+                    <span>ALL</span>
+                </button>
+                <button class="tab-btn" data-filter="delivered">
+                    <span>DELIVERED</span>
+                </button>
+                <button class="tab-btn" data-filter="active">
+                    <span>ACTIVE</span>
+                </button>
+                <button class="tab-btn" data-filter="cancelled">
+                    <span>CANCELLED</span>
+                </button>
+            </div>
+
+            <!-- Orders Container -->
+            <div class="orders-container" id="ordersContainer">
+                <!-- Loading State -->
+                <div style="text-align: center; padding: 4rem 2rem;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #6b8e23;"></i>
+                    <p style="margin-top: 1.5rem; color: #718096; font-size: 1.1rem;">Loading your orders...</p>
+                </div>
+            </div>
+
+            <!-- Empty State (hidden by default) -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h3>No Orders Found</h3>
+                <p>You don't have any orders matching the selected filter.</p>
+                <a href="{% url 'main:catalog' %}" class="empty-btn">
+                    START SHOPPING
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/account-overview.js' %}"></script>
+    <script src="{% static 'js/account.js' %}"></script>
+    <script src="{% static 'js/orders.js' %}"></script>
+</body>
+</html>

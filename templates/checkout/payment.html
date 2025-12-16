@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Farm2Home</title>
+    <link rel="stylesheet" href="{% static 'css/global-typography.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Stripe.js Library (Test Mode) -->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-wrapper">
+            <!-- Left Side - Order Items (Same as before) -->
+            <div class="order-items-section">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                
+                <div class="items-carousel">
+                    <div class="carousel-container">
+                        <div class="carousel-items" id="carouselItems"></div>
+                    </div>
+                    <div class="carousel-dots" id="carouselDots"></div>
+                </div>
+            </div>
+
+            <!-- Right Side - Payment Options -->
+            <div class="checkout-form-section">
+                <!-- Progress Steps -->
+                <div class="progress-steps" data-active="2">
+                    <div class="step active" id="step1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">SHIPPING</span>
+                    </div>
+                    <div class="step active" id="step2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">PAYMENT</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">CONFIRMATION</span>
+                    </div>
+                </div>
+
+                <!-- Payment Method Toggle -->
+                <div class="payment-container">
+                    <h2>PAYMENT METHOD</h2>
+
+                    <!-- Payment Toggle Buttons -->
+                    <div class="payment-toggle">
+                        <button class="toggle-btn active" onclick="switchPaymentMethod('card')" id="cardToggle">
+                            <i class="fas fa-credit-card"></i>
+                            CARD PAYMENT
+                        </button>
+                        <button class="toggle-btn" onclick="switchPaymentMethod('cod')" id="codToggle">
+                            <i class="fas fa-money-bill-wave"></i>
+                            CASH ON DELIVERY
+                        </button>
+                    </div>
+
+                    <!-- Card Payment Form -->
+                    <div class="payment-method active" id="cardPayment">
+                        <!-- Credit Card Display -->
+                        <div class="card-display" id="cardDisplay">
+                            <div class="card-chip-wrapper">
+                                <div class="card-chip-icon">
+                                    <i class="fas fa-sim-card"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="card-logo" id="cardLogo">VISA</div>
+                            
+                            <div class="card-number" id="displayCardNumber">5790 2533 6570 3631</div>
+                            
+                            <div class="card-bottom-row">
+                                <div class="card-info-group">
+                                    <span class="card-label-text">Owner Name</span>
+                                    <span class="card-value-text" id="displayCardName">Ahmed Khan</span>
+                                </div>
+                                <div class="card-info-group">
+                                    <span class="card-label-text">Exp</span>
+                                    <span class="card-value-text" id="displayExpiryDate">06/27</span>
+                                </div>
+                                <div class="card-info-group">
+                                    <span class="card-label-text">CVV</span>
+                                    <span class="card-value-text" id="displayCVV">262</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="cardPaymentForm" class="payment-form">
+                            <div class="form-group">
+                                <label>CARD HOLDER NAME</label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="cardName" placeholder="Ahmed Khan" required>
+                                </div>
+                            </div>
+
+                            <!-- Stripe Card Element Container -->
+                            <div class="form-group">
+                                <label>CARD DETAILS (SECURE)</label>
+                                <div id="card-element" style="background: rgba(255, 255, 255, 0.95); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 8px; padding: 12px;">
+                                    <!-- Stripe Card Element will be mounted here -->
+                                </div>
+                                <div id="card-errors" role="alert" style="color: #fa755a; margin-top: 8px; font-size: 14px;"></div>
+                            </div>
+
+                            <div class="payment-footer">
+                                <div class="total-section">
+                                    <span class="total-label">Total:</span>
+                                    <span class="total-amount" id="cardTotal">PKR 0.00</span>
+                                </div>
+                                <button type="button" class="order-btn" id="cardOrderBtn" data-payment-method="card" disabled>
+                                    <span class="default">Complete Order</span>
+                                    <span class="success">Order Placed
+                                        <svg viewBox="0 0 12 10">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </span>
+                                    <div class="box"></div>
+                                    <div class="truck">
+                                        <div class="back"></div>
+                                        <div class="front">
+                                            <div class="window"></div>
+                                        </div>
+                                        <div class="light top"></div>
+                                        <div class="light bottom"></div>
+                                    </div>
+                                    <div class="lines"></div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Cash on Delivery -->
+                    <div class="payment-method" id="codPayment">
+                        <div class="cod-section">
+                            <div class="cod-card">
+                                <!-- Icon -->
+                                <div class="cod-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="cod-content">
+                                    <h3>Cash on Delivery</h3>
+                                    <p>Pay when you receive your order</p>
+                                    <ul>
+                                        <li>No advance payment required</li>
+                                        <li>Pay in cash to delivery person</li>
+                                        <li>Exact change recommended</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Total Amount -->
+                                <div class="cod-total">
+                                    <span class="label">Total</span>
+                                    <span class="amount" id="codTotal">RS 0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="payment-footer">
+                                <div class="total-section">
+                                    <span class="total-label">Order Total:</span>
+                                    <span class="total-amount" id="codOrderTotal">PKR 0.00</span>
+                                </div>
+                                <button type="button" class="order-btn" id="codOrderBtn" data-payment-method="cod">
+                                    <span class="default">Complete Order</span>
+                                    <span class="success">Order Placed
+                                        <svg viewBox="0 0 12 10">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </span>
+                                    <div class="box"></div>
+                                    <div class="truck">
+                                        <div class="back"></div>
+                                        <div class="front">
+                                            <div class="window"></div>
+                                        </div>
+                                        <div class="light top"></div>
+                                        <div class="light bottom"></div>
+                                    </div>
+                                    <div class="lines"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script>
+        // Stripe Publishable Key (Test Mode)
+        const STRIPE_PUBLIC_KEY = '{{ STRIPE_PUBLIC_KEY }}';
+    </script>
+    <script src="{% static 'js/payment.js' %}"></script>
+</body>
+</html>

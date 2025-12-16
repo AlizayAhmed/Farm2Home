@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Farm2Home</title>
+    <link rel="stylesheet" href="{% static 'css/global-typography.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-wrapper">
+            <!-- Left Side - Success Message -->
+            <div class="order-items-section">
+                <div style="text-align: left; max-width: 500px; position: relative; z-index: 5; margin-right: auto;">
+                    <div style="font-size: 80px; color: #4CAF50; margin-bottom: 20px;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h1 style="color: #333; margin-bottom: 20px; font-size: 32px;">Order Confirmed!</h1>
+                    <p style="font-size: 18px; color: #666; margin-bottom: 15px;">
+                        Thank you for your purchase. Your order has been successfully placed.
+                    </p>
+                    <p style="font-size: 16px; color: #888; margin-bottom: 30px;">
+                        <i class="fas fa-envelope" style="margin-right: 8px;"></i>
+                        A confirmation email will be sent to your email address shortly with your order details and tracking information.
+                    </p>
+                    <div style="background: #f0f9ff; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #5dbf4d; width: fit-content;">
+                        <p style="font-size: 13px; color: #555; margin: 0;">
+                            <i class="fas fa-truck" style="margin-right: 8px;"></i>
+                            Estimated delivery: <strong>24-48 hours</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Confirmation -->
+            <div class="checkout-form-section">
+                <!-- Progress Steps -->
+                <div class="progress-steps" data-active="3">
+                    <div class="step active" id="step1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">SHIPPING</span>
+                    </div>
+                    <div class="step active" id="step2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">PAYMENT</span>
+                    </div>
+                    <div class="step active" id="step3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">CONFIRMATION</span>
+                    </div>
+                </div>
+
+                <!-- Confirmation Content -->
+                <div class="checkout-form active-form">
+                    <h2>ORDER CONFIRMATION</h2>
+                    
+                    <div class="confirmation-container">
+                        <div class="confirmation-box">
+                            <h4>ORDER SUMMARY</h4>
+                            <div id="confirmationDetails" class="confirmation-items"></div>
+                        </div>
+
+                        <div class="confirmation-box">
+                            <h4>SHIPPING ADDRESS</h4>
+                            <div id="confirmationShipping"></div>
+                        </div>
+
+                        <div class="confirmation-box">
+                            <h4>PAYMENT METHOD</h4>
+                            <div id="confirmationPayment"></div>
+                        </div>
+
+                        <div class="confirmation-actions">
+                            <button type="button" class="place-order-btn" onclick="continueShopping()" style="width: 100%; font-size: 16px;">
+                                <i class="fas fa-shopping-bag" style="margin-right: 8px;"></i>
+                                CONTINUE SHOPPING
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/confirmation.js' %}"></script>
+</body>
+</html>
