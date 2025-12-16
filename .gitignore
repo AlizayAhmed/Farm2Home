@@ -1,0 +1,37 @@
+# Python
+_pycache_/
+*.py[cod]
+*$py.class
+
+
+# Environment variables file
+.env
+
+# VS Code
+# .vscode/
+
+# # IDEs
+# .idea/
+# *.sublime-project
+# *.sublime-workspace
+
+# # pyenv
+# .python-version
+
+# pytest
+# .pytest_cache/
+
+# pip / packaging
+# pip-wheel-metadata/
+# *.egg-info/
+
+# System files
+# .DS_Store
+# Thumbs.db
+
+# Other
+# coverage.xml
+# htmlcov/
+
+# # Node
+# node_modules
